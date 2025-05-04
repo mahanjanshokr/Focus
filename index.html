@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>فرم شرح حال مشکل تمرکز</title>
+  <style>
+    body { font-family: sans-serif; direction: rtl; background: #f7f7f7; padding: 2rem; }
+    label { display: block; margin: 1rem 0 0.3rem; font-weight: bold; }
+    select, input[type="text"], textarea { width: 100%; padding: 0.5rem; }
+    .multi { margin-bottom: 1rem; }
+    .btn { padding: 0.7rem 1.5rem; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <h2>فرم شرح حال مشکل تمرکز</h2>
+  <form id="focusForm">
+    
+    <label for="onset_duration">از چه زمانی مشکل تمرکز دارید؟</label>
+    <select name="onset_duration" required>
+      <option>کمتر از یک ماه</option>
+      <option>۱ تا ۶ ماه</option>
+      <option>بیش از ۶ ماه</option>
+      <option>از کودکی</option>
+    </select>
+
+    <label>در چه موقعیت‌هایی مشکل تمرکز دارید؟</label>
+    <div class="multi">
+      <label><input type="checkbox" name="situations" value="مطالعه"> مطالعه</label>
+      <label><input type="checkbox" name="situations" value="محل کار"> محل کار</label>
+      <label><input type="checkbox" name="situations" value="مکالمه"> مکالمه</label>
+      <label><input type="checkbox" name="situations" value="فعالیت‌های روزمره"> فعالیت‌های روزمره</label>
+    </div>
+
+    <label>کدام علائم را تجربه می‌کنید؟</label>
+    <div class="multi">
+      <label><input type="checkbox" name="symptoms" value="بی‌قراری"> بی‌قراری</label>
+      <label><input type="checkbox" name="symptoms" value="فراموش‌کاری"> فراموش‌کاری</label>
+      <label><input type="checkbox" name="symptoms" value="ناتوانی در پایان کارها"> ناتوانی در پایان کارها</label>
+      <label><input type="checkbox" name="symptoms" value="پرش ذهنی"> پرش ذهنی</label>
+      <label><input type="checkbox" name="symptoms" value="خستگی مداوم"> خستگی مداوم</label>
+    </div>
+
+    <!-- می‌تونی بقیه سوال‌ها رو هم مشابه بالا اضافه کنی -->
+
+    <button type="submit" class="btn">ارسال</button>
+  </form>
+
+  <script>
+    document.getElementById('focusForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const formData = new FormData(event.target);
+      const data = {};
+
+      formData.forEach((value, key) => {
+        if (data[key]) {
+          if (Array.isArray(data[key])) {
+            data[key].push(value);
+          } else {
+            data[key] = [data[key], value];
+          }
+        } else {
+          data[key] = value;
+        }
+      });
+
+      console.log("فرم ارسال شد:", data);
+
+      // اگر بخوای به Firebase بفرستی، اینجا می‌تونی fetch یا firestore SDK استفاده کنی.
+    });
+  </script>
+
+</body>
+</html>
